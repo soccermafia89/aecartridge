@@ -1,6 +1,9 @@
 ---
-Name: python27
-Version: '0.1'
+Name: aetest
+Cartridge-Short-Name: AETEST
+Display-Name: AeTest 1.0.0
+Description: "aetest cartridge."
+Version: '1.0.0'
 Base: openshift/fedora-python27:latest
 User: python_app
 Prepare: '/opt/openshift/prepare /tmp/source'
