@@ -4,6 +4,8 @@ Cartridge-Short-Name: AETEST
 Display-Name: AeTest 1.0.0
 Description: "aetest cartridge."
 Version: '1.0.0'
+Cartridge-Vendor: aetest
+Source-Url: https://github.com/soccermafia89/aecartridge.git
 Base: openshift/fedora-python27:latest
 User: python_app
 Prepare: '/opt/openshift/prepare /tmp/source'
