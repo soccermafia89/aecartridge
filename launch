@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+IPADDR=$(ip a s | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}')
+
+pushd /opt/openshift/cartridge >/dev/null
+
+app_file=`find . -name app.py | head -n 1`
+
+if [ -z $app_file ]; then
+  echo "Could not locate app.py"
+  exit 1
+fi
+
+# FIXME: For some reason the $HOME environment variable is not set properly
+#        for 'python_app' user.
+#
+export HOME=/opt/openshift
+
+export PATH=$PATH:$HOME/.local/bin
+
+# Bind gunicorn to container IP and log into stdout/stderr
+#
+server_args="--bind ${IPADDR} --access-logfile - --error-logfile -"
+gunicorn app:app $server_args
+popd >/dev/null
+

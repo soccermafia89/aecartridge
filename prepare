@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+source_dir="$1"
+if [ ! -e $source_dir ]; then
+  echo "Need to provide a directory containing python application source"
+  exit 1
+fi
+
+mkdir -p /opt/openshift/cartridge
+chown python_app:python_app /opt/openshift/cartridge
+
+pushd /opt/openshift/cartridge >/dev/null
+
+cp -vRf $source_dir/* .
+
+if [ ! -f requirements.txt ]; then
+  echo "ERROR: Unable to locate 'requirements.txt' file in source repository"
+  exit 1
+else
+  echo "Installing gunicorn Python WSGI HTTP server..."
+  HOME=/opt/openshift pip install gunicorn --user >/dev/null
+  echo "Installing python-2.7 application dependencies from ./requirements.txt..."
+  HOME=/opt/openshift pip install --user -r requirements.txt
+fi
+
+popd >/dev/null
