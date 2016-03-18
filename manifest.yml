@@ -8,6 +8,10 @@ Cartridge-Vendor: aetest
 Source-Url: https://github.com/soccermafia89/aecartridge.git
 Base: openshift/fedora-python27:latest
 User: python_app
+Categories:
+  - service
+  - aetest
+  - web_framework
 Prepare: '/opt/openshift/prepare /tmp/source'
 Execute: '/opt/openshift/launch'
 Volumes:
